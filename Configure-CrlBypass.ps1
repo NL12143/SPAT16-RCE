@@ -2,7 +2,6 @@
 # modified by spence to check presence of each framework v2 (not instaled on WAC)
 # and general tidy up to fit model of SPAT
 
-
 #region PARAMS
 param () 
 #endregion PARAMS
@@ -12,7 +11,6 @@ $netV232path = "c:\Windows\Microsoft.NET\Framework\v2.0.50727\CONFIG\machine.con
 $netV264path = "c:\Windows\Microsoft.NET\Framework64\v2.0.50727\CONFIG\machine.config"
 $netV432path = "c:\Windows\Microsoft.NET\Framework\v4.0.30319\CONFIG\machine.config"
 $netV464path = "c:\Windows\Microsoft.NET\Framework64\v4.0.30319\CONFIG\machine.config"
-
 
 #v2 32 bit
 $path = $netV232path
@@ -54,8 +52,6 @@ if (Test-Path $path) {
     $xml.Save($path)
 }
 
-
-
 #Set 64bit V2 Framework
 $path = $netV264path
 if (Test-Path $path) {
@@ -76,7 +72,6 @@ if (Test-Path $path) {
     $xml.Save($path)
 }
 
-
 #Set 64bit V4 Framework
 $path = $netV464path
 if (Test-Path $path) {
@@ -96,6 +91,5 @@ if (Test-Path $path) {
     }
     $xml.Save($path)
 }
-
 
 #EOF

@@ -1,26 +1,20 @@
 ﻿<#
 .SYNOPSIS
     Configures IIS Bindings for use with SharePoint Web Applications
-    
-
 .DESCRIPTION
     Intended for SP Web Apps created using the "hostheader trick" which need the IIS bindings corrected.
     SP is ignorant of IP Address and Certificate bindings.
 
     This is actually in some ways a good thing, because it gives us ultimate flexibility.
-    Allowing us to configure IIS correctly for any Load Balancer scheme and for any
-    URL namespace.
+    Allowing us to configure IIS correctly for any Load Balancer scheme and for any URL namespace.
 
     However if a new machine is added to the farm running SPFWAS, the bindings will need to be updated there as well.
 
-    We deliberately do NO SHAREPOINT WORK in this script.
-    This is 100% IIS
+    We deliberately do NO SHAREPOINT WORK in this script. This is 100% IIS
     Recommended tasks (such as removing the host header in the SPSecureBindings) are done seperately.
 
     THIS SCRIPT ONLY DEALS WITH SSL WEB SITES ON PORT 443 - by design.
     THIS SCRIPT ONLY DEALS WITH SSLFLAGS 0 (NO SNI) - by design.
-   
-      
 
     spence@harbar.net
     25/06/2015 - Original work created for MinRole Scenario Testing
@@ -28,10 +22,6 @@
 
     14/03/2016 - Added support for non standard Certificate Friendly Names
     18/03/2016 - Added SPSecureBinding.HostHeader cleanup
-    
-
-
-
 .NOTES
 	File Name  : Configure-IisBindings.ps1
 	Author     : Spencer Harbar (spence@harbar.net)

@@ -2,8 +2,7 @@
 .SYNOPSIS
     Remove IIS default App Pools and Web Sites.
     Configures the default Log file location for future Web Sites.
-    Configures additional log fields.
-    
+    Configures additional log fields.   
 .DESCRIPTION
     Remove IIS default App Pools and Web Sites.
     Configures the default Log file location for future Web Sites.
@@ -20,12 +19,13 @@
 	Requires   : PowerShell Version 2.0  
 .LINK
 .PARAMETER File  
+.EXAMPLE 
+    
 #>
-
 
 #region PARAMS
 param (  
-    [String]$IisLogsLocation,
+    [String]$IISlogsLocation,
     [String]$WebSite = "Default Web Site",
     [String[]]$AppPools = (".NET v2.0", ".NET v2.0 Classic", ".NET v4.5", ".NET v4.5 Classic", "Classic .NET AppPool", "DefaultAppPool"),
     [String]$IisLogFields = "Date,Time,ClientIP,UserName,ServerIP,Method,UriStem,UriQuery,HttpStatus,Win32Status,BytesSent,BytesRecv,TimeTaken,ServerPort,UserAgent,Host,HttpSubStatus"

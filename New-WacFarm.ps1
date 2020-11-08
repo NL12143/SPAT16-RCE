@@ -1,12 +1,9 @@
 ﻿<#
 .SYNOPSIS
     Creates a new Office Web Apps (WAC) Farm
-    
 .DESCRIPTION
-
     spence@harbar.net
     25/01/2016
-    
 .NOTES
 	File Name  : New-WacFarm.ps1
 	Author     : Spencer Harbar (spence@harbar.net)
@@ -15,7 +12,6 @@
 .PARAMETER File  
 	The configuration file
 #>
-
 
 #region PARAMS
 param (  

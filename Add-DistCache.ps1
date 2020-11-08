@@ -1,21 +1,11 @@
 ﻿<#
 .SYNOPSIS
     Adds host to cache cluster
-    
-
 .DESCRIPTION
-
     Used as part of 2013 topology builder
     Also used when dealing with changing DC service indentity
-    
-      
-
     spence@harbar.net
     25/06/2015
-    
-
-
-
 .NOTES
 	File Name  : Add-DistCache.ps1
 	Author     : Spencer Harbar (spence@harbar.net)
@@ -23,17 +13,15 @@
 .LINK
 .PARAMETER File  
 	The configuration file
-
+.MAIN
+    Add-SPDistributedCacheServiceInstance 
 #>
-
 
 #region PARAMS
 param (  
     [String]$server
 ) 
 #endregion PARAMS
-
-
 
 #region MAIN
 try {

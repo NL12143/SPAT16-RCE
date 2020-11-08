@@ -2,18 +2,12 @@
 <#  
 .SYNOPSIS  
 	SharePoint Automation Toolkit
-
 .DESCRIPTION  
-	
 .NOTES  
 	File Name  : 0-SPAT16-Controller.ps1
 	Author     : Spencer Harbar (spence@harbar.net)
 	Requires   : Faith and Patience 
-
     Version    : 4.0
-
-    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
-    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
         UPDATE THE VARIABLES IN THE VARS_TO_UPDATE REGION
             Futher comments in there
@@ -22,38 +16,22 @@
                   SP binaries allready installed on all servers
                   All accounts created in Active Directory
 
-        
-
         WILL CALL EXTERNAL SCRIPTs
             - MUST BE IN SAME FOLDER (and resolvable)
 
-
     04/04/2016 - mods for 2016
-
-
     TODO: Change Web App to not return
     TODO: FARM FUNCTIONS Write Host
     TODO: CHeck IP in IIS Bindings Script
-
-
-    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
-    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
-	
-.LINK  
-	
+.LINK  	
 .PARAMETER File  
 	The configuration file
 #>
 #endregion
 
 #region VARS_TO_UPDATE
-
-#####################################################################
-# these you update to reflect your environment
-#
-#####################################################################
+############################
 # GLOBAL
-
 $customer = "10 SERVER FARM"             # only output in debug
 $debug = $false                          # output additional debug
 $debugSearch = $false                    # output additional debug for SSA
