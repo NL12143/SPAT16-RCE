@@ -53,7 +53,7 @@ $configInstanceName = ""                   # SQL Instance Name (Empty if default
 $configPort = "1433"                       # SQL Port
 
 # content1AliasName will be used for initial Content Databases
-$content1AliasName = "SPCONTENT"          # SQL Alias (CONTENT)
+$content1AliasName = "SPCONTENT"           # SQL Alias (CONTENT)
 $content1ServerName = "FABSQL1"            # SQL Server Name
 $content1InstanceName = ""                 # SQL Instance Name (Empty if default)
 $content1Port = "1433"                     # SQL Port
@@ -70,10 +70,8 @@ $logServerName = "FABSQL1"                 # SQL Server Name
 $logInstanceName = ""                      # SQL Instance Name (Empty if default)
 $logPort = "1433"                          # SQL Port
 
-
 #####################################################################
-# ACCOUNTS
-# do NOT include the domain, this is added automatically
+# ACCOUNTS # do NOT include the domain, this is added automatically
 
 $accounts = @{
     "Setup" = "administrator"
@@ -90,12 +88,11 @@ $objectCacheReader = "sppcachereader"
 # default site collection owner
 $siteCollectionOwner = "administrator"
 
-
 #####################################################################
 # FARM DETAILS
 
 $farmPrefix = "SP16_Farm"             # Used as Prefix for DB Names
-$outgoingMailServer = "SMTP"  # SMTP Server (DO NOT INCLUDE DOMAIN)
+$outgoingMailServer = "SMTP"          # SMTP Server (DO NOT INCLUDE DOMAIN)
 $outgoingMailFromAddress = "noreply"  # Do NOT include domain
 
 #####################################################################
@@ -126,18 +123,19 @@ $farmServers = @{
     "fabsp04" = "WebFrontEnd"
     "fabsp05" = "Application"
     "fabsp06" = "Application"
-    "fabsp07" = "Search"
-    "fabsp08" = "Search"
-    "fabsp09" = "Search"
-    "fabsp10" = "Search"
+    "fabsp07" = "Search"        # Index, Query and Admin
+    "fabsp08" = "Search"        # Index, Query and Admin
+    "fabsp09" = "Search"        # Crawl, Content and Analytics Processing
+    "fabsp10" = "Search"        # Crawl, Content and Analytics Processing
+    "fabsp11" = "WAC"
+    "fabsp12" = "WAC"
+
 }
 
 # the servers which will run Index, Query and Admin
 $adminQueryIndexServers = ("fabsp07", "fabsp08")
-
 # the servers which will run Crawl, Content and Analytics Processing
 $crawlContentAnalyticsServers = ("fabsp09", "fabsp10")
-
 
 #####################################################################
 # CENTRAL ADMINISTRATION
@@ -150,7 +148,6 @@ $caIpAddresses = @{
     "FABSP03" = "10.2.1.30"
     "FABSP04" = "10.2.1.30"
  }
-
 
 #####################################################################
 # WEB APPLICATIONS (do NOT include domain name host names)
@@ -203,14 +200,11 @@ $wacCacheLocation ="c:\WACCache"
 $wacRenderCacheLocation = "c:\WACRenderCache"
 
 #####################################################################
-
 #endregion VARS_TO_UPDATE
 
 #region VARS_OPTIONAL
-
 # you only need to change these if you don't want the 'standard'
 # configuration. Leave them alone if you don't know what you are doing!
-
 
 #####################################################################
 # Farm
@@ -232,9 +226,7 @@ $waAppPoolName = "SharePoint Content"
 $saAppPoolName = "SharePoint Web Services Default"
 $saSuffix = "Service Application"    
 
-
-
- # Service App Names and Settings
+# Service App Names and Settings
 $stateName = "State $saSuffix"
 $stateDBName = $farmPrefix + "_State"
 $usageName = "Usage and Health Data Collection $saSuffix"
@@ -277,9 +269,7 @@ $searchDbName = $farmPrefix + "_Search"
 #endregion VARS_OPTIONAL
 
 #region VARS_NEVERUPDATE 
-
 # these are 'statics' for the script only
-
 $caName = "SharePoint Central Administration v4" # never update this
 $centralAdminPort = 443                          # Port for CA
 $distributedCacheServiceAccountFixed = $false    # do not change
@@ -307,7 +297,6 @@ $StartAddressScript = ".\New-StartAddress.ps1"
 
 #endregion VARS_NEVERUPDATE
 
-# =============================================================================
 # =============================================================================
 
 #region INIT
@@ -348,8 +337,6 @@ if ($debug) {
     Pause
 }
 
-
-
 if ($sslWebApps) {
     $caUrl = "https://$caHostName"
     $portalUrl = "https://$portalHostName"
@@ -365,11 +352,8 @@ else {
 #endregion INIT
 
 #region CREDS
-
 Write-Output "$time : Credential Requests..."
-
 $creds = @{}
-
 # loop thru hash table and get credentials
 ForEach ($account in $accounts.Keys)
 {
@@ -392,13 +376,11 @@ if ($checkAdmins) {
         Pause 
     }
 }
-
-    #endregion CREDS
+#endregion CREDS
 
 # =============================================================================
 # RUN TO HERE TO INITIALISE SESSION
 # ============================================================================
-
 
 #region MACHINE_PREP
 try {
@@ -431,20 +413,16 @@ try {
             Invoke-Command -ComputerName $server -FilePath $sqlAliasScript `
                            -ArgumentList $content1AliasName, $content1ServerName, $content1InstanceName, $content1Port `
                            -Credential $creds.Setup -Authentication Credssp
-
             Invoke-Command -ComputerName $server -FilePath $sqlAliasScript `
                            -ArgumentList $configAliasName, $configServerName, $configInstanceName, $configPort `
                            -Credential $creds.Setup -Authentication Credssp
-
             Invoke-Command -ComputerName $server -FilePath $sqlAliasScript `
                            -ArgumentList $searchAliasName, $searchServerName, $searchInstanceName, $searchPort `
                            -Credential $creds.Setup -Authentication Credssp
-
             Invoke-Command -ComputerName $server -FilePath $sqlAliasScript `
                            -ArgumentList $logAliasName, $logServerName, $logInstanceName, $logPort `
                            -Credential $creds.Setup -Authentication Credssp
         }
-        
         # Enable BackgroundGC - we do this on all machines in case the topology changes in future
         if ($role -ne "Wac") {
             Invoke-Command -ComputerName $server -FilePath $distCacheGcScript `
@@ -460,11 +438,9 @@ catch {
     $_
     Pause
 }
-
 #endregion MACHINE_PREP
 
 #region FARM_CREATION
-
 try {
     Write-Output "$time : Starting Farm Creation..."
     Write-Output "$time : Creating Configuration Database and Central Admin Content Database..."
@@ -565,11 +541,9 @@ catch [System.Exception]{
     $_
     Pause
 }
-
 #endregion FARM_CREATION
 
-#region MANAGED_ACCOUNTS
-   
+#region MANAGED_ACCOUNTS   
 # Create Managed Accounts
 try {
     Write-Output "$time : Creating Managed Accounts..."
@@ -582,15 +556,12 @@ catch {
     $_
     Pause
 }
-
 #endregion MANAGED_ACCOUNTS
 
 #region SERVICE_IDENTITY
-
 try {
     Write-Output "$time : Configuring Search Service Account..."
     Get-SPEnterpriseSearchService | Set-SPEnterpriseSearchService -ServiceAccount $creds.Services.UserName -ServicePassword $creds.Services.Password
-
     Write-Output "$time : Configuring Distributed Cache Service Account..."
     $dcService = $spfarm.Services | Where-Object {$_.TypeName -eq "Distributed Cache"}
     $dcService.ProcessIdentity.CurrentIdentityType = "SpecificUser"
@@ -607,7 +578,6 @@ catch {
 #endregion SERVICE_IDENTITY
 
 #region MINROLE_CONFIG
-
 try {
     Write-Output "$time : Configuring AutoProvision..."
 
@@ -624,7 +594,6 @@ catch {
 #endregion MINROLE_CONFIG
 
 #region FARM_JOIN
-
 try {
     Write-Output "$time : Joining servers to the farm..."
     ForEach ($server in $farmServers.Keys) {
@@ -1104,9 +1073,7 @@ catch {
 #region CUSTOMER_TWEAKS
 try {
     Write-Verbose -Message "$time : Initiating Customer Tweaks..."
-   
     Write-Verbose -Message "$time : Configuring Shell Admins..."
-
     # Add Shell Admin to all databases on the Default Database Server
     # e.g. SPContent 
     # This is all databses except Search and Usage.
@@ -1145,7 +1112,6 @@ try {
     $rootCert = (Get-SPCertificateAuthority).RootCertificate
     $rootCert.Export("Cert") | Set-Content -Path $certPath -Encoding byte
 
-
     $script = "Import-Certificate -FilePath $certPath -CertStoreLocation Cert:\LocalMachine\AuthRoot | Out-Null"
     foreach ($server in $farmServers.Keys) {
     Write-Verbose -Message "$time : Importing SharePoint Root Certificate on $server..."
@@ -1163,7 +1129,6 @@ catch {
     $_
     Pause
 }
-
 #endregion CUSTOMER_TWEAKS
 #>
 
