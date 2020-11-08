@@ -1,26 +1,18 @@
 ﻿<#
 .SYNOPSIS
     Configures the SharePoint Search Service Application Topology
-
 .DESCRIPTION
-
     Expects Search Services to already be running.
     Derived from original MinRole (SP16) utility
-
     Single Server topology - all roles on one server.
     Collapsed Roles or Custom
-
     ** Farm MUST have search services running before this script executes **
     ** Handled by MinRole and controller script for 2016 **
-
     ** THIS SCRIPT MUST BE RUN ON A MACHINE WITH A SEARCH ROLE **
     ** Handled by the controller **
 
-
     spence@harbar.net
     17/03/2016: new version for just topology
-    
-
 
 .NOTES
 	File Name  : Configure-SearchTopology.ps1
@@ -29,7 +21,6 @@
 .LINK
 .PARAMETER File  
 	The configuration file
-
 #>
 
 #region PARAMS

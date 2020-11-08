@@ -1,10 +1,8 @@
 ﻿<#
 .SYNOPSIS
     Creates a new Content Source Start Address
-    
 .DESCRIPTION
     Creates a new Content Source Start Address
-
     Used to avoid issue with the "attempted to perform an unauthorised operation" 
     error (which succeeds anyway) when not running this on a machine hosting search
       

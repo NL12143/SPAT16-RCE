@@ -9,7 +9,7 @@
     25/06/2015
 
     13/02/2016: Modified for SP13 from 16 baseline
-    14/02/2016: Removed pre release tracing
+    14/02/2016: Removed pre-release tracing
     24/02/2016: Added Distributed Cache Utilities
     24/02/2016: Added Search Services Utilities
     18/03/2016: Added SPSecureBinding.HostHeaderCleanUp
@@ -68,7 +68,6 @@ function Start-SearchHostController($server) {
     #while (Get-SPEnterpriseSearchServiceInstance -Identity $server | ? { $_.Status -eq "Online" }) {
     #    Start-Sleep 1
     #}
-
     Write-Host "$time : Search Service on $server is started!" -ForegroundColor Green
 }
 

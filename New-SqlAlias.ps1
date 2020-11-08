@@ -1,11 +1,10 @@
 <#
 .SYNOPSIS
     Creates a new SQL Server Alias
-    
 .DESCRIPTION
     Creates a  SQL Server Alias
-
-    we create the x64 key even thou it's not used by SharePoint. Just in case we need it in the future (e.g. update)
+    we also create the x64 key even thou it's not used by SharePoint. 
+    Just in case we need it in the future (e.g. update)
     only creates TCP/IP alias
     DBMSSOCN,FABSQL1,1433
       
@@ -42,17 +41,19 @@ process {
     $clientPath = "HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo"
     $clientX64Path = "HKLM:\SOFTWARE\Wow6432Node\Microsoft\MSSQLServer\Client\ConnectTo"
 
-    if (!(Test-Path $clientPath)) {
-        New-Item $clientPath | Out-Null
+    if (!(Test-Path $clientPath)) { # registry key not existst 
+        New-Item $clientPath | Out-Null # Add registry key for x86
     }
-    if (!(Test-Path $clientX64Path)) {
-        New-Item $clientX64Path | Out-Null
+    if (!(Test-Path $clientX64Path)) { # registry key not existst 
+        New-Item $clientX64Path | Out-Null # Add registry key for x64 
     }
-
+    # Set values to registry keys 
     New-ItemProperty $clientPath -Name $aliasName -PropertyType "String" -Value $tcpAlias -force | Out-Null
     New-ItemProperty $clientX64Path -Name $aliasName -PropertyType "String" -Value $tcpAlias -force | Out-Null
 }
-end {
+end 
+{
     Write-Output "$(Get-Date -Format T) : SQL Alias $aliasName created on $env:ComputerName"
 }
+
 #EOF

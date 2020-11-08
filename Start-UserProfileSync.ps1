@@ -1,15 +1,13 @@
 ﻿<#
 .SYNOPSIS
-    Starts User Profile Synchronization Service Instance
-    
+    Starts User Profile Synchronization Service Instance 
 .DESCRIPTION
 
     spence@harbar.net
     25/06/2015
 
     12/12/2015: updated process to start and check status
-    14/02/2016: updated for Atos scripts
-    
+    14/02/2016: updated for Atos scripts # ??
 .NOTES
 	File Name  : Start-UserProfileSync.ps1
 	Author     : Spencer Harbar (spence@harbar.net)
@@ -17,7 +15,6 @@
 .LINK
 .PARAMETER File  
 	The configuration file
-
 #>
 
 #region PARAMS

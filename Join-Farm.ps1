@@ -1,23 +1,21 @@
 ﻿<#
 .SYNOPSIS
     Joins a machine to a SharePoint Farm.
-    
 .DESCRIPTION
     spence@harbar.net
     25/06/2015
-
     12/01/2016: updates for 2013 farm support
-    
 .NOTES
 	File Name  : Join-Farm.ps1
 	Author     : Spencer Harbar (spence@harbar.net)
 	Requires   : PowerShell Version 2.0  
 .LINK
 .PARAMETER File  
-	The configuration file
-
+    The configuration file
+.EXAMPLE
+Join-Farm.ps1  $Server, $DatabaseServer, $ConfigDatabase, $Passphrase, $ServerRole, $ServerRoleOptional
+) 
 #>
-
 
 #region PARAMS
 param (  
@@ -29,8 +27,6 @@ param (
     [bool]$ServerRoleOptional
 ) 
 #endregion PARAMS
-
-
 
 #region MAIN
 try {

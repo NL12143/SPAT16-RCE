@@ -1,14 +1,11 @@
 <#
 .SYNOPSIS
-    Tests if a user is a local admin on the machine
-    
+    Tests if a user is a local admin on the machine  
 .DESCRIPTION
     Note only returns true for directly added users, if 
-    user is added via a group, will return false
-    
+    user is added via a group, will return false   
     spence@harbar.net
-    25/06/2015
-    
+    25/06/2015 
 .NOTES
 	File Name  : Test-IsAdmin.ps1
 	Author     : Spencer Harbar (spence@harbar.net)
@@ -16,7 +13,6 @@
 .LINK
 .PARAMETER File  
 	The configuration file
-
 #>
 
 
@@ -25,8 +21,6 @@ param (
     [String]$User
     ) 
 #endregion PARAMS
-
-
 
 #region MAIN
 try {

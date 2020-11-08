@@ -1,15 +1,12 @@
 ﻿<#
 .SYNOPSIS
     Sets the Distributed Cache Service Identity
-    
 .DESCRIPTION
-
     Used as part of 2013 topology builder
     
     spence@harbar.net
     25/02/2016
     
-
 .NOTES
 	File Name  : Set-DistributedCacheIdentity.ps1
 	Author     : Spencer Harbar (spence@harbar.net)
@@ -17,9 +14,7 @@
 .LINK
 .PARAMETER File  
 	The configuration file
-
 #>
-
 
 #region PARAMS
 param (  
@@ -28,12 +23,10 @@ param (
 ) 
 #endregion PARAMS
 
-
-
 #region MAIN
 try {
-    If ((Get-PSSnapin -Name "Microsoft.SharePoint.PowerShell" -EA 0) -eq $null) { Add-PSSnapin -Name "Microsoft.SharePoint.PowerShell" }
-   
+    If ((Get-PSSnapin -Name "Microsoft.SharePoint.PowerShell" -EA 0) -eq $null) { 
+        Add-PSSnapin -Name "Microsoft.SharePoint.PowerShell" }
     Write-Host "$(Get-Date -Format T) : Configuring Distributed Cache Service Account..."
     Write-Host "$(Get-Date -Format T) : This normally takes about 8 minutes..." -ForegroundColor Yellow
     $SpFarm = Get-SPFarm
