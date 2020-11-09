@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Main>		
+	<DNBAD>
+		<Servers>
+      		        <Server name="P3000838" function="wfe" />
+      			<Server name="P3000737" function="app" />
+      			<Server name="P3000722" function="owa" />
+		</Servers>		
+	</DNBAD>
+</Main>
