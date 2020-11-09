@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Main>		
+	<DNBAD>
+		<Servers>
+      		        <Server name="P3000014" function="wfe" />
+      			<Server name="P3000016" function="app" />
+      			<Server name="P3000017" function="owa" />
+			<Server name="P3000018" function="cam" />			
+		</Servers>		
+	</DNBAD>
+	<DNBA>
+		<Servers>
+				<Server name="P0530500" function="wfe" />
+      			<Server name="P0530600" function="wfe" />
+      			<Server name="P0530700" function="wfe" />
+				<Server name="P5000580" function="wfe" />
+				<Server name="P0530800" function="app" />
+      			<Server name="P0530900" function="app" />
+      			<Server name="P0531000" function="app" />
+      			<Server name="P0531100" function="app" />
+      			<Server name="P0531200" function="app" />
+				<Server name="P5000581" function="app" />
+      			<Server name="P0531300" function="owa" />
+      			<Server name="P0531400" function="owa" />
+      			<Server name="P0531500" function="owa" />
+				<Server name="P0531600" function="cam" />
+				<Server name="P0531700" function="cam" />
+				<Server name="P0531800" function="cam" />
+		</Servers>			
+	</DNBA>
+	<DNB>
+		<Servers>
+		      	<Server name="P0810500" function="wfe" />
+      			<Server name="P0810600" function="wfe" />
+      			<Server name="P0810700" function="wfe" />
+				<Server name="P1000714" function="wfe" />
+				<Server name="P1000715" function="wfe" />
+      			<Server name="P0810800" function="app" />
+      			<Server name="P0810900" function="app" />
+      			<Server name="P0811000" function="app" />
+      			<Server name="P0811100" function="app" />
+      			<Server name="P0811200" function="app" />
+				<Server name="P1000716" function="app" />
+				<Server name="P1000718" function="app" />
+      			<Server name="P0811300" function="owa" />
+      			<Server name="P0811400" function="owa" />
+      			<Server name="P0811500" function="owa" />
+				<Server name="P0811600" function="cam" />
+				<Server name="P0811700" function="cam" />
+				<Server name="P0811800" function="cam" />
+		</Servers>		
+	</DNB>	
+</Main>
