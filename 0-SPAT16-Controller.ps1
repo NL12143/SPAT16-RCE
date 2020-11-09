@@ -70,9 +70,8 @@ $logServerName = "FABSQL1"                 # SQL Server Name
 $logInstanceName = ""                      # SQL Instance Name (Empty if default)
 $logPort = "1433"                          # SQL Port
 
+#region ACCOUNTS # do NOT include the domain, this is added automatically
 #####################################################################
-# ACCOUNTS # do NOT include the domain, this is added automatically
-
 $accounts = @{
     "Setup" = "administrator"
     "Farm" = "sppfarm"
@@ -80,65 +79,59 @@ $accounts = @{
     "Web Applications" = "sppcontent"
     "Content Access" = "sppcontentaccess"
 }
-
 # Object cache accounts
 $objectCacheAdmin = "sppcacheadmin"
 $objectCacheReader = "sppcachereader"
 
 # default site collection owner
-$siteCollectionOwner = "administrator"
+$siteCollectionOwner = "administrator"      # Get a Content account 
 
-#####################################################################
-# FARM DETAILS
-
+#region CONFIG
+FARM DETAILS
 $farmPrefix = "SP16_Farm"             # Used as Prefix for DB Names
 $outgoingMailServer = "SMTP"          # SMTP Server (DO NOT INCLUDE DOMAIN)
 $outgoingMailFromAddress = "noreply"  # Do NOT include domain
-
-#####################################################################
 # LOG LOCATIONS
 $iisLogLocation = "c:\Logs\IIS"
 $ulsLocation = "c:\logs\uls"
 $healthLocation = "c:\logs\usage"
-
-#####################################################################
 # DISTRIBUTED CACHE CONFIGURATION
 $dcMaxConnections = 2
 $dcTimeout = "3000"
+#endregion CONFIG 
 
+#region FARM MINROLE TOPOLOGY OPTIONS
 #####################################################################
-# TOPOLOGY OPTIONS
-
 # The servers in the farm and any WAC servers (and thier role).
-# options are:
-#         DistributedCache, WebFrontEnd, Application, 
-#         Search, Wac, DistributedCacheWebFrontEnd
+# options are: DistributedCache, WebFrontEnd, Application, 
+#              Search, WAC, DistributedCacheWebFrontEnd
 #
 $serverRoleOptional = $false       # false will build MinRole farm
 
 $farmServers = @{
-    "fabsp01" = "DistributedCache"
+    "fabsp01" = "DistributedCache"  # adjust for combined roles 
     "fabsp02" = "DistributedCache"
     "fabsp03" = "WebFrontEnd"
     "fabsp04" = "WebFrontEnd"
     "fabsp05" = "Application"
     "fabsp06" = "Application"
-    "fabsp07" = "Search"        # Index, Query and Admin
-    "fabsp08" = "Search"        # Index, Query and Admin
-    "fabsp09" = "Search"        # Crawl, Content and Analytics Processing
-    "fabsp10" = "Search"        # Crawl, Content and Analytics Processing
+    "fabsp07" = "Search"            # Index, Query and Admin
+    "fabsp08" = "Search"            # Index, Query and Admin
+    "fabsp09" = "Search"            # Crawl, Content and Analytics Processing
+    "fabsp10" = "Search"            # Crawl, Content and Analytics Processing
     "fabsp11" = "WAC"
     "fabsp12" = "WAC"
-
 }
+#region FARM TOPOLOGY OPTIONS
 
 # the servers which will run Index, Query and Admin
 $adminQueryIndexServers = ("fabsp07", "fabsp08")
 # the servers which will run Crawl, Content and Analytics Processing
 $crawlContentAnalyticsServers = ("fabsp09", "fabsp10")
 
+#region CENTRAL ADMINISTRATION
 #####################################################################
-# CENTRAL ADMINISTRATION
+
 $caHostName = "spca"                     # do not include domain name
 $caCertName = "spca.fabrikam.com"        # Cert friendly name
 
@@ -148,11 +141,11 @@ $caIpAddresses = @{
     "FABSP03" = "10.2.1.30"
     "FABSP04" = "10.2.1.30"
  }
+#endRegion 
 
+#region WEB APPLICATIONS (do NOT include domain name host names)
 #####################################################################
-# WEB APPLICATIONS (do NOT include domain name host names)
-
-# intranet web application details
+# intranet - web application details
 $portalAppName = "SharePoint Intranet"              # display name
 $portalHostName = "intranet"                        # host name
 $portalCertName = "intranet.fabrikam.com"           # Cert friendly name
@@ -163,7 +156,7 @@ $portalIpAddresses = @{
     "FABSP04" = "10.2.1.31"
 }
 
-# mysite host web application details
+# mysite-host - web application details
 $oneDriveAppName = "SharePoint OneDrive"              # display name
 $oneDriveHostName = "onedrive"                             # host name
 $oneDriveCertName = "onedrive.fabrikam.com"                # Cert friendly name
@@ -173,11 +166,10 @@ $oneDriveIpAddresses = @{
     "FABSP03" = "10.2.1.32"
     "FABSP04" = "10.2.1.32"
 }
+#endRegion WEB APPLICATIONS
 
-
-
+#region SEARCH
 #####################################################################
-# SEARCH
 $changeContentAccessAccount = $true
 $configureSearchCentre = $true
 $configureContinuousCrawl = $true
@@ -185,22 +177,25 @@ $addSPS3S = $true
 $changeIndexLocation = $true
 $indexLocationDrive = "C"
 $indexLocationPath = "SearchData"
+#endRegion Search
 
+#region APPS
 #####################################################################
-# APPS
 $appsUrl = "apps.intranet"  # do not include domain name
 $appsPrefix = "app"
+#endRegion 
 
+#region WAC
 #####################################################################
-# WAC
 $wacHostName = "wac"
 $wacCertName = "wac.fabrikam.com"                # Cert friendly name
 $wacLogLocation = "c:\Logs\WAC"
 $wacCacheLocation ="c:\WACCache"
 $wacRenderCacheLocation = "c:\WACRenderCache"
+#endRegion 
 
+#region VARS_TO_UPDATE
 #####################################################################
-#endregion VARS_TO_UPDATE
 
 #region VARS_OPTIONAL
 # you only need to change these if you don't want the 'standard'
@@ -216,9 +211,8 @@ $adminContentDB = $farmPrefix + "_Content_Admin"
 $outgoingMailReplyToAddress = $outgoingMailFromAddress
 $outgoingMailCharSet = 65001
 
-#####################################################################
 # APP POOLS AND SERVICE APPLICATIONS
-
+#####################################################################
 # Content Web Applications Application Pool
 $waAppPoolName = "SharePoint Content"
 
@@ -226,7 +220,7 @@ $waAppPoolName = "SharePoint Content"
 $saAppPoolName = "SharePoint Web Services Default"
 $saSuffix = "Service Application"    
 
-# Service App Names and Settings
+#region Service App Names and Settings
 $stateName = "State $saSuffix"
 $stateDBName = $farmPrefix + "_State"
 $usageName = "Usage and Health Data Collection $saSuffix"
@@ -246,6 +240,7 @@ $mtsDBName = $farmPrefix + "_MachineTranslation"
 $pasName = "PowerPoint Automation $saSuffix"
 $visioName = "Visio Graphics $saSuffix"
 $accessName = "Access $saSuffix"
+#endRegion 
 
 # Secure Store
 $sssName = "Secure Store $saSuffix"
@@ -265,49 +260,51 @@ $mySiteManagedPath = "personal"
 $searchName = "Search $saSuffix"
 $searchDbName = $farmPrefix + "_Search"
 
-#####################################################################
 #endregion VARS_OPTIONAL
 
 #region VARS_NEVERUPDATE 
+#####################################################################
 # these are 'statics' for the script only
 $caName = "SharePoint Central Administration v4" # never update this
 $centralAdminPort = 443                          # Port for CA
 $distributedCacheServiceAccountFixed = $false    # do not change
 
-#####################################################################
-# External Scripts
-$searchTopologyScript = ".\Configure-SearchTopology.ps1"
-$joinFarmScript = ".\Join-Farm.ps1"
-$upgradeScript = ".\Update-Psc.ps1"
+#region Scripts variables 
+$joinFarmScript     = ".\Join-Farm.ps1"
+$upgradeScript      = ".\Update-Psc.ps1"
 $distributedCacheIdentityScript = ".\Set-DistributedCacheIdentity.ps1"
 $distCacheAddScript = ".\Add-DistCache.ps1"
-$distCacheGcScript = ".\Update-DistCacheGc.ps1"
-$iisBindingsScript = ".\Configure-IisBindings.ps1"
-$upaCreationScript = ".\New-UserProfileService.ps1"
-$upsStartScript = ".\Start-UserProfileSync.ps1"
-$testAdminScript = ".\Test-IsAdmin.ps1"
-$createWacFarmScript = ".\New-WacFarm.ps1"
-$iisConfigScript = ".\Configure-Iis.ps1"
-$loopbackScript = ".\Configure-Loopback.ps1"
-$sqlAliasScript = ".\New-SqlAlias.ps1"
-$shellAdminScript  = ".\Add-ShellAdmin.ps1"
-$crlBypassScript  = ".\Configure-CrlBypass.ps1"
-$SearchServiceApplicationScript = ".\New-SearchServiceApplication.ps1"
+$distCacheGcScript  = ".\Update-DistCacheGc.ps1"
+$iisBindingsScript  = ".\Configure-IisBindings.ps1"
+$iisConfigScript    = ".\Configure-Iis.ps1"
+$upaCreationScript  = ".\New-UserProfileService.ps1"
+$upsStartScript     = ".\Start-UserProfileSync.ps1"
+$testAdminScript    = ".\Test-IsAdmin.ps1"
+$createWacFarmScript= ".\New-WacFarm.ps1"
+$loopbackScript     = ".\Configure-Loopback.ps1"
+$sqlAliasScript     = ".\New-SqlAlias.ps1"
+$shellAdminScript   = ".\Add-ShellAdmin.ps1"
+$crlBypassScript    = ".\Configure-CrlBypass.ps1"
 $StartAddressScript = ".\New-StartAddress.ps1"
+$searchTopologyScript = ".\Configure-SearchTopology.ps1"
+$SearchServiceApplicationScript = ".\New-SearchServiceApplication.ps1"
+#endregion Scripts variables 
 
 #endregion VARS_NEVERUPDATE
 
-# =============================================================================
-
 #region INIT
+#####################################################################
 $global:time = Set-PSBreakpoint -Variable time -Mode Read -Action {$global:time = Get-Date -Format T}
 Clear-Host
 Write-Host "******************************************************************" -ForegroundColor Cyan
 Write-Host "* Starting SharePoint Farm Build for $customer" -ForegroundColor Cyan
 Write-Host "******************************************************************" -ForegroundColor Cyan
 Write-Output "$time : Running Initialisation..."
+
 if ((Get-PSSnapin -Name "Microsoft.SharePoint.PowerShell" -EA 0) -eq $null) { Add-PSSnapin -Name "Microsoft.SharePoint.PowerShell" }
 . ".\Farm-Functions.ps1"
+
+#region Set Accounts, hosts, url, ..
 $domain = $env:USERDOMAIN    
 $domainFqdn = $env:USERDNSDOMAIN
 $objectCacheAdmin = "$domain\$objectCacheAdmin"
@@ -321,6 +318,7 @@ $oneDriveHostName = "$oneDriveHostName.$domainFqdn"
 $wacHostName = "$wacHostName.$domainFqdn"
 $appsUrl = "$appsUrl.$domainFqdn"
 $outgoingMailServer = "$outgoingMailServer.$domainFqdn"
+
 if ($debug) {
     Write-Host "Domain: $domain" -ForegroundColor Magenta   
     Write-Host "Domain FQDN: $domainFqdn" -ForegroundColor Magenta
@@ -349,6 +347,7 @@ else {
     $oneDriveUrl = "http://$oneDriveHostName"
     # WAC is not supported without SSL in this script
 }
+#endregion Set Accounts, hosts, url, .
 #endregion INIT
 
 #region CREDS
@@ -367,6 +366,7 @@ ForEach ($account in $accounts.Keys)
         $creds.Add($account, $cred)
     }
 }
+#endRegion CREDS
 
 $passPhrase = Read-Host -AsSecureString -Prompt "Please provide the SharePoint Farm Passphrase: "
 
@@ -378,14 +378,11 @@ if ($checkAdmins) {
 }
 #endregion CREDS
 
-# =============================================================================
 # RUN TO HERE TO INITIALISE SESSION
-# ============================================================================
 
 #region MACHINE_PREP
 try {
     Write-Output "$time : Performing Server Preparation..."
-
     foreach ($server in $farmServers.Keys) {
         $role = $farmServers.Item($server)
 
@@ -1136,7 +1133,7 @@ catch {
 If ($Upgrade) {
     Write-Output "$time : Upgrading Content Databases..."
     Get-SPContentDatabase | Upgrade-SPContentDatabase -Confirm:$false
-    Write-Output "$time : All content databases upgraded!"
+    Write-Output "$time : All content databases upgraded!" # May use a test
 }
 #endregion
 
@@ -1153,7 +1150,7 @@ If ($Upgrade) {
     }
     Write-Output "$time : All servers upgraded!"
 }
-#endregion
+#endregion B2B_UPGRADE
 
 #region FINAL_TASKS
 try {

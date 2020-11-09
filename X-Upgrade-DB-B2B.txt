@@ -1,0 +1,30 @@
+
+
+## Update-CDB.ps1  
+
+#region CDB_UPGRADE
+If ($Upgrade) {
+    Write-Output "$time : Upgrading Content Databases..."
+    Get-SPContentDatabase | Upgrade-SPContentDatabase -Confirm:$false
+    Write-Output "$time : All content databases upgraded!" 
+    # May use a Test-SPcontentDatabase 
+}
+#endregion
+
+## Update-PSC.ps1 
+$upgradeScript  = ".\Update-PSC.ps1"
+
+#region B2B_UPGRADE # note: finally resolved in recent 2016 PU!!!!
+If ($Upgrade) {
+    Write-Output "$time : Upgrading (B2B) servers in the farm..."
+    ForEach ($server in $farmServers.Keys) {
+        if ($farmServers.Item($server) -ne "Wac") {
+            Invoke-Command -ComputerName $server -filePath $upgradeScript `
+                           -ArgumentList $debug `
+                           -Credential $creds.Setup -Authentication Credssp
+        }
+    }
+    Write-Output "$time : All servers upgraded!"
+}
+#endregion
+

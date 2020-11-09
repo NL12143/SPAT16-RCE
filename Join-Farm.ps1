@@ -14,6 +14,7 @@
     The configuration file
 .EXAMPLE
 Join-Farm.ps1  $Server, $DatabaseServer, $ConfigDatabase, $Passphrase, $ServerRole, $ServerRoleOptional
+
 ) 
 #>
 

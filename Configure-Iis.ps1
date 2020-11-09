@@ -1,4 +1,8 @@
 ﻿<#
+
+What about using Kernel Mode Authentication, kerberos, ...
+Setting AppPool to not puase or recycle (CRM best practice) 
+
 .SYNOPSIS
     Remove IIS default App Pools and Web Sites.
     Configures the default Log file location for future Web Sites.

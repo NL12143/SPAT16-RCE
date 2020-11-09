@@ -1,0 +1,54 @@
+CRM and AD Managed Accounts 
+
+Referring to the following article in the TechNet: 
+“Managed service accounts (group-managed service accounts (gMSA) 
+or single-managed service accounts) and virtual accounts (NT SERVICE\,<SERVICENAME>) 
+aren’t supported for running Microsoft Dynamics 365 services.”
+
+Ref: Security considerations for Microsoft Dynamics 365
+https://technet.microsoft.com/en-us/library/hh699825.aspx?f=255&MSPPError=-2147217396
+
+
+CRM_setup 
+CRM_async 
+CRM_monitor
+CRM_vss
+CRM_deploy 
+
+The following subsections describe the domain user account permissions 
+required for each service or application pool identity:
+Microsoft Dynamics 365 Sandbox Processing Service
+Microsoft Dynamics 365 Asynchronous Processing Service and 
+Microsoft Dynamics 365 Asynchronous Processing Service (maintenance) services
+Microsoft Dynamics 365 Monitoring Service
+Microsoft Dynamics 365 VSS Writer service
+Deployment Web Service (CRMDeploymentServiceAppPool AppPoolID)
+Application Service (CRMAppPool IIS AppPoolID)
+
+" Logon as service" permission in the Local Security Policy.
+service account may need an SPN for the URL used to access the site that is associated with it.
+
+
+https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/deployment-administrators-guide/hh699761(v=crm.8)
+
+By default, IIS websites are configured to use Kernel-Mode authentication. 
+When you run the Microsoft Dynamics 365 website by using Kernel-Mode authentication, 
+you might not need to configure additional service principal names (SPNs) 
+for the CRMAppPool identities.
+
+If kernel-mode authentication is enabled, the SPNs will be defined for the machine account, 
+regardless of the specified service account. When you implement a web farm, 
+enable kernel-mode authentication and change the local ApplicationHost.config file.
+
+To determine whether your IIS deployment requires SPNs, see 
+Service Principal Name (SPN) checklist for Kerberos authentication with IIS 7.0/7.5.
+
+Dynamics 365 Server Setup creates application pools called 
+CRMAppPool and CRMDeploymentServiceAppPool 
+that operate under user credentials that you specify during Setup. 
+
+If application and deployment web services are running on the same system, 
+and kernel-mode authentication is disabled, you could configure both services 
+to run under the same domain user account to prevent duplicate SPN issues
+
+https://docs.microsoft.com/en-us/previous-versions/hh367322(v=msdn.10)?redirectedfrom=MSDN
