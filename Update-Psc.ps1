@@ -5,6 +5,8 @@ param (
 #endregion PARAMS
 
 $path = "C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\bin\psconfig.exe"
+$path15 = "C:\Program Files\Common Files\microsoft shared\Web Server Extensions\15\bin\psconfig.exe"
+$path16 = "C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\bin\psconfig.exe"
 
 Write-Output "$(Get-Date -Format T) : Upgrading (B2B) on $env:COMPUTERNAME..."
 if ($debug) {
