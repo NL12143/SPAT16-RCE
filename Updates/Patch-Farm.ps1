@@ -1,20 +1,4 @@
 
-Run script remote 
-
-<#
-.SYNOPSIS
-    Patches Web Apps (WAC) Farm
-.DESCRIPTION
-.NOTES
-	File Name  : Patch-WacFarm.ps1
-	Author     : Spencer Harbar (spence@harbar.net)
-	Requires   : PowerShell Version 2.0  
-.LINK
-.PARAMETER File  
-	The configuration file
-#>
-
-#region PARAMS
 param (  
     [String]$server,
     [String]$patch = "D:\Temp\wac-----gbs.exe"

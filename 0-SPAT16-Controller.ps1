@@ -188,14 +188,14 @@ $appsUrl = "apps.intranet"  # do not include domain name
 $appsPrefix = "app"
 #endRegion 
 
-#region WAC
+#region WAC CONFIG
 #####################################################################
 $wacHostName = "wac"
 $wacCertName = "wac.fabrikam.com"                # Cert friendly name
 $wacLogLocation = "c:\Logs\WAC"
 $wacCacheLocation ="c:\WACcache"
 $wacRenderCacheLocation = "c:\WACRenderCache"
-#endRegion 
+#endRegion WAC CONFIG
 
 #region VARS_TO_UPDATE
 #####################################################################
@@ -375,15 +375,14 @@ Better restart $cred # Request credentials
 
 $passPhrase = Read-Host -AsSecureString -Prompt "Please provide the SharePoint Farm Passphrase: "
 
+#region CHECK ADMIN
 if ($checkAdmins) {
     if (!(Test-IsAdmin $farmAccount)) {
         Write-Warning -Message "The farm account ($farmAccount) is not a local machine administrator on the controller ($env:ComputerName)! You can either stop script execution or continue."
         Pause 
     }
 }
-#endregion CREDS
-
-# RUN TO HERE TO INITIALISE SESSION
+#endregion CHECK ADMIN
 
 #region MACHINE_PREP
 try {
@@ -890,7 +889,7 @@ catch {
 }
 #endregion SERVICE_APPLICATIONS
 
-#region SEARCH_SA
+#region SEARCH SSA
 try {
     $SearchServers = @((Get-SPServer | Where-Object {$_.Role -eq "search" -or $_.Role -eq "SingleServerFarm"}) |
                                        ForEach-Object {$_.Address})
@@ -933,7 +932,7 @@ catch {
     $_
     Pause
 }
-#endregion SEARCH_SA
+#endregion SEARCH SSA
 
 #region SEARCH_TOPOLOGY
 try {
@@ -1029,16 +1028,14 @@ catch {
 }
 #endregion SHAREPOINT_APPS
 
-<#
-#todo - test w 2016
+<##todo - test W2016
+#endregion 
+
 #region WAC
 try {
     if ($sslWebApps) {
-
         $wacFarm = $false
-    
         ForEach ($server in $farmServers.Keys) {
-    
             $role = $farmServers.Item($server)
             if ($role -eq "Wac") {
                 if (!$wacFarm) {
@@ -1057,7 +1054,6 @@ try {
 
         Write-Output "$time : Connecting SharePoint to Office Web Apps..."
         New-SPWOPIBinding -ServerName $wacHostName | out-null
-
         Write-Output "$time : Office Web Apps Complete!"
     }
     else {

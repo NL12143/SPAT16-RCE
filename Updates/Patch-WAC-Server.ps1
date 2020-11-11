@@ -1,6 +1,7 @@
 
+
 $title = "Patching Office Web Apps Farm"
-$script = 
+$patch = "Patch-WAC-Server.ps1"
 
 try {
     Write-Output "$(Get-Date -Format T) : $title on $server..."
@@ -10,7 +11,7 @@ try {
 }
 
 catch {
-    Write-Host "OOOPS! We failed during " $script" "on $server." -ForegroundColor Red"
+    Write-Host "OOOPS! We failed during " $patch" "on $server." -ForegroundColor Red"
     $_
     Exit
 }
