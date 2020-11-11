@@ -1,0 +1,22 @@
+
+
+
+
+
+
+
+
+
+VARIABLES 
+
+$creds = @{}
+
+$servers = @{
+
+$accounts = @{
+    "Setup"    = "administrator"
+    "Farm"     = "sppfarm"
+    "Services" = "sppservices"
+    "Web Applications" = "sppcontent"
+    "Content Access" = "sppcontentaccess"
+}
