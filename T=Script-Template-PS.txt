@@ -1,6 +1,7 @@
-﻿<#
+
+<#
 .SYNOPSIS
-    Creates a new Office Web Apps (WAC) Farm
+    Creates a new Office Web Apps (WAC) Farm # $title
 .DESCRIPTION
     spence@harbar.net
     25/01/2016
@@ -13,7 +14,9 @@
 	The configuration file
 #>
 
-#region PARAMS
+$title = "Creation of WAC Farm"
+
+#region INPUT
 param (  
     [String]$server,
     [String]$internalUrl = "https://wac.fabrikam.com",
@@ -26,12 +29,11 @@ param (
     [String]$docInfoSize = 5000,                      
     [String]$maxMem = 1024
 ) 
-#endregion PARAMS
+#endregion INPUT
 
 #region MAIN
 try {
     Import-Module OfficeWebApps
-   
     Write-Output "$(Get-Date -Format T) : Creating Office Web Apps Farm on $server..."
     #ScriptVars 
     $testURL = "$internalUrl/m/met/participant.svc/jsonAnonymous/BroadcastPing"
@@ -39,27 +41,21 @@ try {
     New-OfficeWebAppsFarm `
         -InternalURL $internalurl `
         -ExternalURL $externalurl `
-        -OpenFromUrlEnabled `
-        -OpenFromUncEnabled `
-        -ClipartEnabled `
-        -CacheLocation $cachelocation `
-        -LogLocation $loglocation `
-        -RenderingLocalCacheLocation $rendercache `
-        -CacheSizeInGB $cacheSize `
-        -DocumentInfoCacheSize $docInfoSize `
-        -MaxMemoryCacheSizeInMB $maxMem `
-        -CertificateName $certName `
-        -EditingEnabled:$false `
         -Confirm:$false | out-null
-     
+	
+     #Test      
      $ver = (Invoke-WebRequest $testURL -UseBasicParsing).Headers["X-OfficeVersion"]
+
+     #Output
      Write-Output "$(Get-Date -Format T) : WAC Farm Version: $ver"
+
 }
 catch {
-    Write-Host "OOOPS! We failed during creation of WAC Farm on $server." -ForegroundColor Red
+    Write-Host "OOOPS! We failed during $title on $server." -ForegroundColor Red
     $_
     Exit
 }
 
 #endregion MAIN
+
 #EOF

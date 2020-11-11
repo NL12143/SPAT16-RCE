@@ -1,8 +1,7 @@
 ﻿<#
-
-What about using Kernel Mode Authentication, kerberos, ...
-Setting AppPool to not puase or recycle (CRM best practice) 
-
+.REMARKS
+Use Kernel Mode Authentication, kerberos, SPN, ...
+Set AppPools not pause and/or recycle (CRM best practice) 
 .SYNOPSIS
     Remove IIS default App Pools and Web Sites.
     Configures the default Log file location for future Web Sites.
@@ -16,7 +15,6 @@ Setting AppPool to not puase or recycle (CRM best practice)
     
     spence@harbar.net
     25/06/2015
-
 .NOTES
 	File Name  : Configure-Iis.ps1
 	Author     : Spencer Harbar (spence@harbar.net)
@@ -24,7 +22,7 @@ Setting AppPool to not puase or recycle (CRM best practice)
 .LINK
 .PARAMETER File  
 .EXAMPLE 
-    
+.HELP     
 #>
 
 #region PARAMS
@@ -36,24 +34,27 @@ param (
 ) 
 #endregion PARAMS
 
+#region MODULES
 Import-Module WebAdministration
+#endregion MODULES
 
-# Remove web site 
+# Remove existing web sites 
+# $WebSite = "Default Web Site"
 if (Get-Website -Name $WebSite) { Remove-WebSite -Name $WebSite }
 
-# remove application pools
+# Remove application pools
 foreach ($AppPool in $AppPools) {
     if (Test-Path IIS:\AppPools\$AppPool) {
         Remove-WebAppPool -name $AppPool
     }
 }
 
-# Set the default log location
+# Set default log location
 if ($IisLogsLocation -ne $null) {
     Set-WebConfigurationProperty "/system.applicationHost/sites/siteDefaults" -name logfile.directory -value $IisLogsLocation
 }
 
-# Set the fields to log
+# Set fields to log
 Set-WebConfigurationProperty -Filter System.Applicationhost/Sites/SiteDefaults/logfile -Name LogExtFileFlags -Value $IisLogFields
 Write-Output "$(Get-Date -Format T) : IIS Configuration Updated on $env:ComputerName"
 

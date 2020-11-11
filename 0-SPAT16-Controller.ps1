@@ -72,9 +72,10 @@ $logPort = "1433"                          # SQL Port
 
 #region ACCOUNTS # do NOT include the domain, this is added automatically
 #####################################################################
+#FarmAccounts
 $accounts = @{
-    "Setup" = "administrator"
-    "Farm" = "sppfarm"
+    "Setup"    = "administrator"
+    "Farm"     = "sppfarm"
     "Services" = "sppservices"
     "Web Applications" = "sppcontent"
     "Content Access" = "sppcontentaccess"
@@ -86,7 +87,9 @@ $objectCacheReader = "sppcachereader"
 # default site collection owner
 $siteCollectionOwner = "administrator"      # Get a Content account 
 
-#region CONFIG
+#endregion ACCOUNTS
+
+#region FARM CONFIG
 FARM DETAILS
 $farmPrefix = "SP16_Farm"             # Used as Prefix for DB Names
 $outgoingMailServer = "SMTP"          # SMTP Server (DO NOT INCLUDE DOMAIN)
@@ -98,7 +101,7 @@ $healthLocation = "c:\logs\usage"
 # DISTRIBUTED CACHE CONFIGURATION
 $dcMaxConnections = 2
 $dcTimeout = "3000"
-#endregion CONFIG 
+#endregion FARM CONFIG 
 
 #region FARM MINROLE TOPOLOGY OPTIONS
 #####################################################################
@@ -185,14 +188,14 @@ $appsUrl = "apps.intranet"  # do not include domain name
 $appsPrefix = "app"
 #endRegion 
 
-#region WAC
+#region WAC CONFIG
 #####################################################################
 $wacHostName = "wac"
 $wacCertName = "wac.fabrikam.com"                # Cert friendly name
 $wacLogLocation = "c:\Logs\WAC"
-$wacCacheLocation ="c:\WACCache"
+$wacCacheLocation ="c:\WACcache"
 $wacRenderCacheLocation = "c:\WACRenderCache"
-#endRegion 
+#endRegion WAC CONFIG
 
 #region VARS_TO_UPDATE
 #####################################################################
@@ -358,10 +361,12 @@ ForEach ($account in $accounts.Keys)
 {
     $userName = "$domain\$($accounts.Item($account))"
     $cred = Get-Credential -UserName $userName -Message "Please provide the credentials for the $account Account: "
-    # validate the creds
+    # validate the creds # Function Validate creds
     if (!(Test-Credentials $cred)) {
         Throw "The credentials provided for the $account Account are invalid!"
-    }
+Better restart $cred # Request credentials 
+
+}
     else {
         $creds.Add($account, $cred)
     }
@@ -370,15 +375,14 @@ ForEach ($account in $accounts.Keys)
 
 $passPhrase = Read-Host -AsSecureString -Prompt "Please provide the SharePoint Farm Passphrase: "
 
+#region CHECK ADMIN
 if ($checkAdmins) {
     if (!(Test-IsAdmin $farmAccount)) {
         Write-Warning -Message "The farm account ($farmAccount) is not a local machine administrator on the controller ($env:ComputerName)! You can either stop script execution or continue."
         Pause 
     }
 }
-#endregion CREDS
-
-# RUN TO HERE TO INITIALISE SESSION
+#endregion CHECK ADMIN
 
 #region MACHINE_PREP
 try {
@@ -885,7 +889,7 @@ catch {
 }
 #endregion SERVICE_APPLICATIONS
 
-#region SEARCH_SA
+#region SEARCH SSA
 try {
     $SearchServers = @((Get-SPServer | Where-Object {$_.Role -eq "search" -or $_.Role -eq "SingleServerFarm"}) |
                                        ForEach-Object {$_.Address})
@@ -928,7 +932,7 @@ catch {
     $_
     Pause
 }
-#endregion SEARCH_SA
+#endregion SEARCH SSA
 
 #region SEARCH_TOPOLOGY
 try {
@@ -1024,16 +1028,14 @@ catch {
 }
 #endregion SHAREPOINT_APPS
 
-<#
-#todo - test w 2016
+<##todo - test W2016
+#endregion 
+
 #region WAC
 try {
     if ($sslWebApps) {
-
         $wacFarm = $false
-    
         ForEach ($server in $farmServers.Keys) {
-    
             $role = $farmServers.Item($server)
             if ($role -eq "Wac") {
                 if (!$wacFarm) {
@@ -1052,7 +1054,6 @@ try {
 
         Write-Output "$time : Connecting SharePoint to Office Web Apps..."
         New-SPWOPIBinding -ServerName $wacHostName | out-null
-
         Write-Output "$time : Office Web Apps Complete!"
     }
     else {

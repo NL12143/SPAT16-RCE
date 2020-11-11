@@ -14,6 +14,7 @@ It is NOT a build automation solution.
 
 ## Remoting
 You need it!
+How to enable > SPAT16\Enable-Remote.ps1
 
 ## Explanation
 May (or may not!) come in the future.  
