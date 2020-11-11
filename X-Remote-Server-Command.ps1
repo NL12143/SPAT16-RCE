@@ -1,9 +1,5 @@
 
-
 https://adamtheautomator.com/invoke-expression/
-
-
-
 
 Invoke-Command -ComputerName $server -filePath
 Invoke-Command -ComputerName $server -scriptBlock 

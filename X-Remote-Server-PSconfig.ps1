@@ -1,5 +1,4 @@
-
-After Attche of ContentDB 
+After Attach existing ContentDB 
 
 $upgradeScript      = ".\Update-PSC.ps1"
 & $path -cmd upgrade -inplace b2b -force | Out-Null     # Silent
