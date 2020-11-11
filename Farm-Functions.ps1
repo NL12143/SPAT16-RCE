@@ -1,10 +1,7 @@
 ﻿<#
 .SYNOPSIS
     Utility Functions for SP13 Farm
-    
-
 .DESCRIPTION
-
     spence@harbar.net
     25/06/2015
 
@@ -12,8 +9,7 @@
     14/02/2016: Removed pre-release tracing
     24/02/2016: Added Distributed Cache Utilities
     24/02/2016: Added Search Services Utilities
-    18/03/2016: Added SPSecureBinding.HostHeaderCleanUp
-    
+    18/03/2016: Added SPSecureBinding.HostHeaderCleanUp 
 .NOTES
 	File Name  : Farm-Functions.ps1
 	Author     : Spencer Harbar (spence@harbar.net)
