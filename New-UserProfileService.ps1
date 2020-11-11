@@ -1,23 +1,20 @@
 ﻿<#
 .SYNOPSIS
     Creates New UPA avoiding Default Schema Issue
-
 .DESCRIPTION
-
     Still important despite removal of UPS in SP 2016+
-      
+
     spence@harbar.net
-    25/06/2015
-    
+    25/06/2015   
 .NOTES
 	File Name  : New-UserProfileService.ps1
-	Author     : Spencer Harbar (spence@harbar.net)
 	Requires   : PowerShell Version 2.0  
 .LINK
 .PARAMETER File  
 	The configuration file
-
 #>
+
+$title = "creating UPA"
 
 #region PARAMS
 param (  
@@ -30,7 +27,6 @@ param (
     [String]$MySiteHost
 ) 
 #endregion PARAMS
-
 
 #region MAIN
 try {
@@ -49,7 +45,7 @@ try {
     Write-Host "$(Get-Date -Format T) : Created $UpaName Application & Proxy!" -ForegroundColor Green
 }
 catch {
-    Write-Host "OOOPS! We failed during creating UPA on $server." -ForegroundColor Red
+    Write-Host "OOOPS! We failed during $title on $server." -ForegroundColor Red
     $_
     Exit
 }

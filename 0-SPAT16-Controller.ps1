@@ -72,9 +72,10 @@ $logPort = "1433"                          # SQL Port
 
 #region ACCOUNTS # do NOT include the domain, this is added automatically
 #####################################################################
+#FarmAccounts
 $accounts = @{
-    "Setup" = "administrator"
-    "Farm" = "sppfarm"
+    "Setup"    = "administrator"
+    "Farm"     = "sppfarm"
     "Services" = "sppservices"
     "Web Applications" = "sppcontent"
     "Content Access" = "sppcontentaccess"
@@ -86,7 +87,9 @@ $objectCacheReader = "sppcachereader"
 # default site collection owner
 $siteCollectionOwner = "administrator"      # Get a Content account 
 
-#region CONFIG
+#endregion ACCOUNTS
+
+#region FARM CONFIG
 FARM DETAILS
 $farmPrefix = "SP16_Farm"             # Used as Prefix for DB Names
 $outgoingMailServer = "SMTP"          # SMTP Server (DO NOT INCLUDE DOMAIN)
@@ -98,7 +101,7 @@ $healthLocation = "c:\logs\usage"
 # DISTRIBUTED CACHE CONFIGURATION
 $dcMaxConnections = 2
 $dcTimeout = "3000"
-#endregion CONFIG 
+#endregion FARM CONFIG 
 
 #region FARM MINROLE TOPOLOGY OPTIONS
 #####################################################################
@@ -190,7 +193,7 @@ $appsPrefix = "app"
 $wacHostName = "wac"
 $wacCertName = "wac.fabrikam.com"                # Cert friendly name
 $wacLogLocation = "c:\Logs\WAC"
-$wacCacheLocation ="c:\WACCache"
+$wacCacheLocation ="c:\WACcache"
 $wacRenderCacheLocation = "c:\WACRenderCache"
 #endRegion 
 
@@ -358,10 +361,12 @@ ForEach ($account in $accounts.Keys)
 {
     $userName = "$domain\$($accounts.Item($account))"
     $cred = Get-Credential -UserName $userName -Message "Please provide the credentials for the $account Account: "
-    # validate the creds
+    # validate the creds # Function Validate creds
     if (!(Test-Credentials $cred)) {
         Throw "The credentials provided for the $account Account are invalid!"
-    }
+Better restart $cred # Request credentials 
+
+}
     else {
         $creds.Add($account, $cred)
     }

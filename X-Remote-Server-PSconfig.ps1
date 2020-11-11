@@ -1,15 +1,20 @@
 
-After Attche of ContentDB 
+After migrate ContentDB via attach  
 
-$upgradeScript      = ".\Update-PSC.ps1"
+$script = ".\Update-PSC.ps1"
 & $path -cmd upgrade -inplace b2b -force | Out-Null     # Silent
 & $path -cmd upgrade -inplace b2b -force -verbose       # Debug
 
-& is used when 
+$path = "C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\bin\psconfig.exe"
+$path15 = "C:\Program Files\Common Files\microsoft shared\Web Server Extensions\15\bin\psconfig.exe"
+$path16 = "C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\bin\psconfig.exe"
 
-psconfig.exe -cmd upgrade -inplace b2b -wait -verbose # Patch 
-psconfig.exe -cmd upgrade -inplace v2v -wait # Upgrade
+$psconfig.exe -cmd upgrade -inplace b2b -wait -verbose # After patch 
+$psconfig.exe -cmd upgrade -inplace v2v -wait # After version upgrade
 
+Invoke-Command -ComputerName $server -filePath $upgradeScript `
+-ArgumentList $debug `
+-Credential $creds.Setup -Authentication Credssp
 
 # B2B_UPGRADE
 #region B2B_UPGRADE # note: finally resolved in recent 2016 PU!!!!
@@ -24,12 +29,18 @@ psconfig.exe -cmd upgrade -inplace v2v -wait # Upgrade
     Write-Output "$time : All servers upgraded!"
 #endregion B2B_UPGRADE
 
+
+$creds.Setup = @{
+    "setup" = 
+}
+
+
 $farmServers
 $farmServers = @{
     "P3000738" = "DEV-AutoSP"  
     "P3000738" = "DEV-Roeland"  
     "P3000739" = "DEV-Jean"  
-    "P3000740" = "DEV-Jan  
+    "P3000740" = "DEV-Jan"  
     }
 
 <#
